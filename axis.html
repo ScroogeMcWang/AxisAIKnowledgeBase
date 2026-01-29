@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Axis AI Knowledge Base</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+.external-links {
+  width: 100%;
+  padding: 24px 0;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  background: transparent;
+}
+
+.external-links a {
+  padding: 10px 18px;
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 999px;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+  color: #ffffff;
+  text-decoration: none;
+  transition: all 0.25s ease;
+  backdrop-filter: blur(6px);
+}
+
+.external-links a:hover {
+  border-color: #ffffff;
+  background: rgba(255,255,255,0.08);
+}
+</style>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:Inter,sans-serif;
+  min-height:100vh;
+  background:radial-gradient(circle at 20% 20%,#1b2b4a,#0c0f1a 55%,#000);
+  color:#e8e8f2;
+}
+.container{max-width:1100px;margin:auto;padding:60px 24px}
+.hidden{display:none}
+
+/* Home */
+#home h1{
+  font-family:Orbitron,sans-serif;
+  font-size:48px;
+  text-align:center;
+  margin-bottom:16px;
+}
+.subtitle{text-align:center;opacity:.75;margin-bottom:48px}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:26px;
+}
+.category-btn{
+  backdrop-filter:blur(14px);
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.18);
+  border-radius:18px;
+  padding:28px;
+  cursor:pointer;
+  transition:.35s;
+}
+.category-btn:hover{
+  transform:translateY(-6px);
+  background:rgba(255,255,255,.14);
+}
+.category-btn h3{
+  font-family:Orbitron,sans-serif;
+  margin-bottom:8px;
+}
+.category-btn p{
+  font-size:14px;
+  opacity:.85;
+}
+
+/* Quiz */
+#quiz h2{
+  font-family:Orbitron,sans-serif;
+  margin-bottom:6px;
+}
+.progress{margin-bottom:22px;opacity:.8}
+
+.card{
+  background:rgba(255,255,255,.1);
+  border:1px solid rgba(255,255,255,.16);
+  border-radius:18px;
+  padding:30px;
+}
+.q-en{font-weight:600;margin-bottom:6px}
+.q-cn{opacity:.85;margin-bottom:14px}
+.a-en{line-height:1.7;margin-bottom:12px}
+.a-cn{opacity:.85;line-height:1.7}
+
+.controls{
+  display:flex;
+  justify-content:space-between;
+  margin-top:26px;
+}
+button{
+  background:rgba(255,255,255,.16);
+  border:none;
+  color:#fff;
+  padding:10px 20px;
+  border-radius:10px;
+  cursor:pointer;
+}
+button:hover{background:rgba(255,255,255,.26)}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+<!-- HOME -->
+<div id="home">
+  <h1>Axis AI Knowledge Base</h1>
+  <div class="subtitle">Robotics · Simulation · Foundation Models</div>
+  <div class="grid" id="categoryGrid"></div>
+</div>
+
+<!-- QUIZ -->
+<div id="quiz" class="hidden">
+  <h2 id="quizTitle"></h2>
+  <div class="progress" id="progress"></div>
+  <div id="card"></div>
+
+  <div class="controls">
+    <button onclick="prev()">Previous</button>
+    <button onclick="backHome()">Home</button>
+    <button onclick="next()">Next</button>
+  </div>
+</div>
+
+</div>
+
+<script>
+const data = {
+
+"What is Axis AI?": {
+label: "Axis AI 是什么？",
+qa: [
+{
+enQ: "What is Axis AI in simple terms?",
+cnQ: "Axis AI 用一句话怎么理解？",
+enA: "Axis AI is building the world’s first End-to-End Scaling Layer for Robotics, turning diverse human knowledge into robots that can learn and generalize across tasks. Think of it as an “internet for robots,” where robots can safely practice, learn, and improve in simulation before going into the real world.",
+cnA: "Axis AI 正在构建全球首个面向机器人的端到端扩展层，把分散的人类知识转化为能够学习并在不同任务之间泛化的机器人智能。你可以把它理解为“机器人的互联网”：机器人在进入真实世界之前，先在仿真环境中安全地练习、学习和改进。"
+},
+{
+enQ: "What problem is Axis AI solving?",
+cnQ: "Axis AI 解决什么问题？",
+enA: "Most robots today fail to generalize beyond specific tasks. Axis AI solves data scarcity, generalization fragility, and hardware fragmentation, making robots smarter, safer, and adaptable across environments.",
+cnA: "当今大多数机器人无法在特定任务之外实现泛化。Axis AI 试图解决数据稀缺、泛化能力脆弱以及硬件形态碎片化的问题，使机器人在不同环境中更加智能、安全且具备适应性。"
+},
+{
+enQ: "How is Axis AI different from LLM projects like ChatGPT?",
+cnQ: "Axis AI 与 ChatGPT 这类大模型有什么不同？",
+enA: "LLMs scale on existing internet data. Robots cannot “read” the world, they must experience it. Axis AI generates simulated experiences at scale to teach robots, which is very different from text-based AI.",
+cnA: "大语言模型依赖现有的互联网数据进行扩展。机器人无法“阅读”世界，只能通过行动去“经历”世界。Axis AI 的方法是在仿真中大规模生成这些经历，用以训练机器人，这与基于文本的 AI 完全不同。"
+},
+{
+enQ: "Is Axis AI a robotics company or an AI company?",
+cnQ: "Axis AI 是机器人公司还是 AI 公司？",
+enA: "Both. Axis AI develops robot learning AI models, simulation platforms, and eventually evolvable robot hardware. It’s the bridge between AI research and real-world robots.",
+cnA: "两者都是。Axis AI 同时开发机器人学习 AI 模型、仿真平台，并最终构建可进化的机器人硬件，是连接 AI 研究与现实机器人世界的桥梁。"
+},
+{
+enQ: "Who is Axis AI for?",
+cnQ: "Axis AI 面向谁？",
+enA: "Anyone interested in robotics, AI, gaming, research, or crypto. You can contribute as a community member, developer, researcher, or gamer, even without robotics experience.",
+cnA: "任何对机器人、AI、游戏、科研或加密领域感兴趣的人都可以参与。即使没有机器人经验，也可以作为社区成员、开发者、研究者或玩家贡献力量。"
+}
+]
+},
+
+"Why Simulation?": {
+label: "为什么要使用仿真？",
+qa: [
+{
+enQ: "Why not just train robots in the real world?",
+cnQ: "为什么不直接在现实世界中训练机器人？",
+enA: "Real-world training is slow, expensive, and risky. Robots can get damaged, and collecting enough examples to generalize is prohibitively costly. Simulation solves these problems by providing safe, cheap, and scalable environments.",
+cnA: "现实世界中的训练速度慢、成本高且风险大。机器人可能受损，而收集足够用于泛化的样本成本极高。仿真通过提供安全、低成本、可规模化的环境解决了这些问题。"
+},
+{
+enQ: "What is simulation data?",
+cnQ: "什么是仿真数据？",
+enA: "Simulation data is information collected from virtual environments, like a video game—where robots practice tasks. It includes movement, object interactions, physics, and sensory inputs that robots can learn from.",
+cnA: "仿真数据来自虚拟环境，类似电子游戏中机器人练习任务时产生的数据。它包括运动、物体交互、物理反馈以及机器人可学习的传感器输入。"
+},
+{
+enQ: "Does simulation really work in the real world?",
+cnQ: "仿真真的能迁移到现实世界吗？",
+enA: "Yes. Using techniques like domain randomization and sim-to-sim verification, robots trained in simulation can succeed in the real world with minimal adjustment. Examples include OpenAI’s Rubik’s Cube robot and cross-embodiment grasping research.",
+cnA: "可以。通过域随机化和 sim-to-sim 验证等技术，在仿真中训练的机器人只需极少调整即可在现实世界中运行。相关案例包括 OpenAI 的魔方机器人以及跨形态抓取研究。"
+},
+{
+enQ: "What is sim-to-real?",
+cnQ: "什么是 sim-to-real？",
+enA: "Sim-to-real is the process of training a robot in simulation and then deploying the learned behavior on a physical robot.",
+cnA: "sim-to-real 指的是先在仿真中训练机器人，再将学到的行为部署到真实机器人上的过程。"
+},
+{
+enQ: "What is sim-to-sim?",
+cnQ: "什么是 sim-to-sim？",
+enA: "Sim-to-sim is testing models across multiple simulation engines before real-world deployment. It ensures that the AI learns robust behaviors instead of overfitting to one simulation’s quirks. This improves generalization.",
+cnA: "sim-to-sim 是在真实部署前，在多个仿真引擎中测试模型。这可以确保 AI 学到的是稳健行为，而不是过度拟合某一个仿真系统的特性，从而提升泛化能力。"
+}
+]
+},
+
+"What Does Axis AI Build?": {
+label: "Axis AI 在构建什么？",
+qa: [
+{
+enQ: "What products is Axis AI building?",
+cnQ: "Axis AI 正在构建哪些产品？",
+enA: "Axis AI is building a unified simulator framework, an interactive consumer platform, a data augmentation engine, and a crypto-native incentive system.",
+cnA: "Axis AI 正在构建统一仿真框架、交互式大众平台、数据增强引擎以及加密原生激励系统。"
+},
+{
+enQ: "What is the Unified Simulator Framework?",
+cnQ: "什么是统一仿真框架？",
+enA: "A comprehensive simulation framework that generates virtually unlimited tasks and data assets, supports full-dimensional augmentation, and enables verified sim-to-real transfer.",
+cnA: "一个综合性的仿真框架，可生成近乎无限的任务和数据资产，支持全维度数据增强，并实现可验证的仿真到现实迁移。"
+},
+{
+enQ: "What is the Interactive Consumer Platform?",
+cnQ: "什么是交互式大众平台？",
+enA: "A game-like environment that allows anyone to contribute simulation tasks and data, collectively building the world’s largest robot-training dataset for robotic foundation models.",
+cnA: "一个类似游戏的环境，任何人都可以贡献仿真任务和数据，共同构建用于机器人基础模型训练的全球最大数据集。"
+},
+{
+enQ: "What is the Data Augmentation Engine?",
+cnQ: "什么是数据增强引擎？",
+enA: "A system that multiplies raw simulation data into massive, high-quality datasets for training robots.",
+cnA: "将原始仿真数据扩展为大规模、高质量的机器人训练数据集的系统。"
+},
+{
+enQ: "What is the Crypto-Native Incentive System?",
+cnQ: "什么是加密原生激励系统？",
+enA: "An on-chain incentive mechanism that aligns contributors and enterprises through verifiable data ownership and rewards, transforming robotic intelligence into a community-built asset class.",
+cnA: "一种链上激励机制，通过可验证的数据所有权和奖励机制连接贡献者与企业，把机器人智能转化为社区共建的资产类别。"
+}
+]
+},
+
+"How Can I Participate?": {
+label: "如何参与 Axis AI？",
+qa: [
+{
+enQ: "Who can join the Axis AI community?",
+cnQ: "谁可以加入 Axis AI 社区？",
+enA: "Anyone interested in robotics, AI, gaming, or crypto. No special skills required to start contributing. Axis AI gamifies data collection, allowing players to control robots in tasks, producing valuable simulation data.",
+cnA: "任何对机器人、AI、游戏或加密领域感兴趣的人都可以加入。不需要特殊技能即可开始贡献。Axis AI 通过游戏化的数据采集方式，让玩家控制机器人完成任务，从而生成有价值的仿真数据。"
+},
+{
+enQ: "Do I need robotics experience?",
+cnQ: "需要机器人经验吗？",
+enA: "No. Non-technical contributors can help through gamified simulation tasks, reporting issues, and community support.",
+cnA: "不需要。非技术型参与者可以通过游戏化仿真任务、问题反馈和社区支持等方式参与。"
+},
+{
+enQ: "How can non-technical users contribute?",
+cnQ: "非技术用户如何参与？",
+enA: "By playing tasks on the Interactive Consumer Platform, you create high-quality robot training data while having fun.",
+cnA: "通过在交互式大众平台中完成任务，在娱乐的同时生成高质量的机器人训练数据。"
+}
+]
+},
+
+"Data, Rewards & Incentives": {
+label: "数据、奖励与激励机制",
+qa: [
+{
+enQ: "What kind of data does Axis AI collect?",
+cnQ: "Axis AI 收集哪些数据？",
+enA: "Simulation trajectories, robot actions, sensor readings, and task outcomes. This data is used to train the Foundation Model.",
+cnA: "包括仿真轨迹、机器人动作、传感器读数以及任务结果。这些数据用于训练机器人基础模型。"
+},
+{
+enQ: "Who owns the data?",
+cnQ: "数据归谁所有？",
+enA: "Contributors retain ownership of the raw data. Once processed into models or augmented datasets, value-sharing mechanisms reward contributors.",
+cnA: "贡献者保留原始数据的所有权。当数据被处理为模型或增强数据集后，通过价值分配机制对贡献者进行奖励。"
+},
+{
+enQ: "Are contributors rewarded?",
+cnQ: "贡献者会获得奖励吗？",
+enA: "Yes. Axis AI uses crypto incentives to reward community members for contributions.",
+cnA: "会。Axis AI 使用加密激励机制奖励社区成员的贡献。"
+},
+{
+enQ: "How does crypto fit into Axis AI?",
+cnQ: "加密机制在 Axis AI 中如何发挥作用？",
+enA: "Crypto powers reward distribution, on-chain data ownership, and access to simulation services.",
+cnA: "加密机制用于奖励分发、链上数据所有权确认以及仿真服务的访问控制。"
+},
+{
+enQ: "Will contributors benefit as the ecosystem grows?",
+cnQ: "生态增长后，贡献者能否受益？",
+enA: "Yes. As Axis AI grows, contributors share in the upside through tokenized rewards tied to their data and model contributions.",
+cnA: "可以。随着 Axis AI 生态的发展，贡献者将通过与其数据和模型贡献绑定的代币化奖励分享增长收益。"
+}
+]
+},
+
+"Roadmap & Vision": {
+label: "路线图与愿景",
+qa: [
+{
+enQ: "What is Axis AI working on right now?",
+cnQ: "Axis AI 目前在做什么？",
+enA: "Finalizing simulation data pipelines, expanding task types, collecting trajectories, and training the first Foundation Model (Axis v0).",
+cnA: "正在完善仿真数据管线、扩展任务类型、收集轨迹数据，并训练首个基础模型（Axis v0）。"
+},
+{
+enQ: "What does Axis v0 / v1 / v2 mean?",
+cnQ: "Axis v0 / v1 / v2 分别代表什么？",
+enA: "Versions of the robotics foundation model: v0: First model trained on simulation; v1: Multi-embodiment, advanced generalization; v2: Large/XL, multi-modal (vision, depth, tactile).",
+cnA: "机器人基础模型的不同版本：v0：首个基于仿真训练的模型；v1：支持多种机器人形态，具备更强的泛化能力；v2：大规模 / 超大规模，多模态（视觉、深度、触觉）。"
+},
+{
+enQ: "What is the long-term vision?",
+cnQ: "长期愿景是什么？",
+enA: "To create general-purpose robot intelligence trained in simulation, deployed across multiple robots, with data and models as verifiable digital assets in a distributed machine economy.",
+cnA: "构建在仿真中训练的通用机器人智能，部署到多种机器人上，并在分布式机器经济中将数据和模型作为可验证的数字资产。"
+},
+{
+enQ: "How big can this ecosystem become?",
+cnQ: "这个生态系统的规模能有多大？",
+enA: "Potentially global. Anyone can contribute tasks, data, or models, creating a community-built robotics intelligence network.",
+cnA: "潜在规模可达全球。任何人都可以贡献任务、数据或模型，共同构建一个社区驱动的机器人智能网络。"
+}
+]
+},
+
+"Trust & Credibility": {
+label: "可信度与背景",
+qa: [
+{
+enQ: "Who is behind Axis AI?",
+cnQ: "Axis AI 的团队背景是什么？",
+enA: "A team of 15 experts from UC Berkeley, PKU, Stanford, NVIDIA, and crypto infrastructure projects, combining robotics, AI, and blockchain expertise.",
+cnA: "团队由 15 位专家组成，成员来自加州大学伯克利分校、北京大学、斯坦福大学、NVIDIA 以及加密基础设施项目，融合了机器人、AI 与区块链领域的经验。"
+},
+{
+enQ: "What research validates this approach?",
+cnQ: "有哪些研究验证了这种方法？",
+enA: "Axis AI builds on RoboVerse, SkillBlender, GraspVLA, and other academic work demonstrating simulation-based training and sim-to-real generalization.",
+cnA: "Axis AI 基于 RoboVerse、SkillBlender、GraspVLA 等学术研究，这些工作已验证了基于仿真训练和 sim-to-real 泛化的可行性。"
+},
+{
+enQ: "Are there real-world results?",
+cnQ: "是否有真实世界的成果？",
+enA: "Yes. Axis AI models trained purely in simulation have achieved over 90% success rates on real-world robot tasks in internal tests.",
+cnA: "有。在内部测试中，完全基于仿真训练的 Axis AI 模型在真实机器人任务中取得了超过 90% 的成功率。"
+},
+{
+enQ: "Who are Axis AI’s partners?",
+cnQ: "Axis AI 的合作伙伴有哪些？",
+enA: "Academic and industry partners include Pico, RoboSense, Agibot, Deep Robotics, EngineAI, and Unitree.",
+cnA: "学术与产业合作伙伴包括 Pico、RoboSense、Agibot、Deep Robotics、EngineAI 和 Unitree。"
+},
+{
+enQ: "Is this just theoretical?",
+cnQ: "这只是理论吗？",
+enA: "No. Axis AI already has a working platform, data, trajectories, and internal POC, with real progress on sim-to-real deployment.",
+cnA: "不是。Axis AI 已经拥有可运行的平台、数据、轨迹以及内部概念验证，并在 sim-to-real 部署方面取得了实际进展。"
+}
+]
+}
+
+};
+
+const grid=document.getElementById("categoryGrid");
+Object.keys(data).forEach(k=>{
+  const b=document.createElement("div");
+  b.className="category-btn";
+  b.innerHTML=`<h3>${k}</h3><p>${data[k].label}</p>`;
+  b.onclick=()=>openCat(k);
+  grid.appendChild(b);
+});
+
+let cur=[],idx=0;
+function openCat(k){
+  cur=data[k].qa;
+  idx=0;
+  home.classList.add("hidden");
+  quiz.classList.remove("hidden");
+  quizTitle.innerText=k;
+  render();
+}
+function render(){
+  progress.innerText=`${idx+1} / ${cur.length}`;
+  const q=cur[idx];
+  card.innerHTML=`
+  <div class="card">
+    <div class="q-en">${q.enQ}</div>
+    <div class="q-cn">${q.cnQ}</div>
+    <div class="a-en">${q.enA}</div>
+    <div class="a-cn">${q.cnA}</div>
+  </div>`;
+}
+function next(){if(idx<cur.length-1){idx++;render()}}
+function prev(){if(idx>0){idx--;render()}}
+function backHome(){
+  quiz.classList.add("hidden");
+  home.classList.remove("hidden");
+}
+</script>
+<footer class="external-links">
+  <a href="https://littleprince.axisrobotics.ai/" target="_blank" rel="noopener">
+    Website
+  </a>
+  <a href="https://x.com/axisrobotics" target="_blank" rel="noopener">
+    Twitter / X
+  </a>
+  <a href="https://discord.gg/axisrobotics" target="_blank" rel="noopener">
+    Discord
+  </a>
+</footer>
+
+</body>
+</html>
